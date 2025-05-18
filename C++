@@ -1,0 +1,24 @@
+# C++
+
+class Solution {
+public:
+    int characterReplacement(string s, int k) {
+        int n = s.length(), left = 0, right = 0, maxfreq = 0, windowsize = 0;
+        vector<int> freq(26, 0);
+        
+        for (right = 0; right < n; ++right) {
+            freq[s[right] - 'A']++;
+            maxfreq = max(maxfreq, freq[s[right] - 'A']);
+            
+            int window = right - left + 1;
+            if (window - maxfreq > k) {
+                freq[s[left] - 'A']--;
+                left++;
+            }
+            window = right - left + 1;
+            windowsize = max(windowsize, window);
+        }
+        
+        return windowsize;
+    }
+};
